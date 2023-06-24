@@ -1,4 +1,9 @@
-import {AppRegistry} from 'react-native';
-import App from './App'; // Replace 'App' with the correct component name
+/**
+ * @format
+ */
 
-AppRegistry.registerComponent('App_E_Commerce', () => App);
+import {AppRegistry} from 'react-native';
+import App from './App';
+import {name as appName} from './app.json';
+
+AppRegistry.registerComponent(appName, () => App);
