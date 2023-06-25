@@ -28,7 +28,7 @@ export default StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  logo: {width: Styles.width * 0.2, height: (Styles.width * 0.2) / 2},
+  logo: {width: 150},
   center: {
     // flex: 1,
   },
