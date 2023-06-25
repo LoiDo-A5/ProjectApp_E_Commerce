@@ -24,11 +24,11 @@ export default StyleSheet.create({
     paddingHorizontal: 16,
   },
   wrapLogo: {
-    flex: 1,
+    flex: 0.6,
     alignItems: 'center',
     justifyContent: 'center',
   },
-  logo: {width: 150},
+  logo: {width: 150, height: 100},
   center: {
     // flex: 1,
   },
@@ -45,7 +45,7 @@ export default StyleSheet.create({
     paddingVertical: 5,
   },
   buttonWrap: {
-    flexDirection: 'row',
+    marginTop: 12,
   },
   separatorWrap: {
     marginTop: 30,
