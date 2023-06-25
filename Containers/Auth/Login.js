@@ -1,7 +1,10 @@
 import {useNavigation} from '@react-navigation/native';
 import React from 'react';
-import {View, Text, StyleSheet, Button} from 'react-native';
+import {View, Button, SafeAreaView, Image} from 'react-native';
 import Routes from '../../App/Utils/Route';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import styles from './LoginStyles';
+import Images from '../../App/Configs/Images';
 
 const Login = () => {
   const navigation = useNavigation();
@@ -10,25 +13,21 @@ const Login = () => {
     navigation.navigate(Routes.SignUp);
   };
   return (
-    <View style={styles.container}>
-      <Text style={styles.text}>Login Screen</Text>
-      <Button title="Signup" onPress={handleSignupPress} />
-    </View>
+    <SafeAreaView style={styles.wrap}>
+      <KeyboardAwareScrollView
+        contentContainerStyle={[styles.scrollView, styles.hwrap]}
+        keyboardShouldPersistTaps={'handled'}>
+        <View style={styles.wrapLogo}>
+          <Image
+            source={Images.logo}
+            style={styles.logo}
+            resizeMode="contain"
+          />
+        </View>
+        <Button title="Signup" onPress={handleSignupPress} />
+      </KeyboardAwareScrollView>
+    </SafeAreaView>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#ffffff',
-  },
-  text: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: '#000000',
-  },
-});
 
 export default Login;
