@@ -1,10 +1,18 @@
+import {useNavigation} from '@react-navigation/native';
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, Button} from 'react-native';
+import Routes from '../../App/Utils/Route';
 
 const Login = () => {
+  const navigation = useNavigation();
+
+  const handleSignupPress = () => {
+    navigation.navigate(Routes.SignUp);
+  };
   return (
     <View style={styles.container}>
       <Text style={styles.text}>Login Screen</Text>
+      <Button title="Signup" onPress={handleSignupPress} />
     </View>
   );
 };

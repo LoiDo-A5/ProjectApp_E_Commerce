@@ -8,8 +8,8 @@ import utils from './utils';
 import Login from '../Containers/Auth/Login';
 import {Colors} from '../App/Configs/Colors';
 import Device from '../App/Configs/Device';
-import SignUp from '../Containers/Auth/Login';
 import Route from '../App/Utils/Route';
+import SignUp from '../Containers/Auth/SignUp';
 
 const Stack = createStackNavigator();
 
