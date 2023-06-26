@@ -1,12 +1,6 @@
 import {useNavigation} from '@react-navigation/native';
 import React, {useState} from 'react';
-import {
-  View,
-  Button,
-  SafeAreaView,
-  Image,
-  TouchableOpacity,
-} from 'react-native';
+import {View, Button, SafeAreaView, Image, Keyboard} from 'react-native';
 import Routes from '../../App/Utils/Route';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import styles from './LoginStyles';
@@ -21,9 +15,27 @@ const Login = () => {
   const [phoneError, setPhoneErrorState] = useState();
   const [password, setPasswordState] = useState('');
   const [passwordError, setPasswordlErrorState] = useState();
-  const handleSignupPress = () => {
-    navigation.navigate(Routes.SignUp);
+
+  const validate = () => {
+    Keyboard.dismiss();
+    let hasError = false;
+    if (!phone) {
+      setPhoneErrorState('Please enter your phone number');
+      hasError = true;
+    } else {
+      setPhoneErrorState('');
+    }
+    if (!password) {
+      setPasswordlErrorState('Please enter your password');
+      hasError = true;
+    } else {
+      setPasswordlErrorState('');
+    }
+    if (!hasError) {
+      navigation.navigate(Routes.SignUp);
+    }
   };
+
   return (
     <SafeAreaView style={styles.wrap}>
       <KeyboardAwareScrollView
@@ -56,21 +68,22 @@ const Login = () => {
             errorText={passwordError}
             textInputStyle={styles.paddingVertical}
             returnKeyType={'done'}
-            // onSubmitEditing={validate}
+            onSubmitEditing={validate}
           />
-          <TouchableOpacity style={styles.forgotWrap}>
-            <Text
-              onPress={() => {
-                navigation.navigate(Routes.ForgotPassword);
-              }}
-              style={styles.forgotText}>
-              {'Forgot Password ?'}
-            </Text>
-          </TouchableOpacity>
 
           <View style={[styles.buttonWrap]}>
-            <Button type="auth" title={'Login'} />
+            <Button type="auth" title={'Login'} onPress={validate} />
           </View>
+        </View>
+
+        <View style={styles.touWrap}>
+          <Text style={[styles.touText]}>{'Dont have an account ?.'}</Text>
+          <Text
+            bold
+            style={styles.signUpText}
+            onPress={() => navigation.navigate(Routes.SignUp)}>
+            {' ' + 'Sign up'}
+          </Text>
         </View>
       </KeyboardAwareScrollView>
     </SafeAreaView>

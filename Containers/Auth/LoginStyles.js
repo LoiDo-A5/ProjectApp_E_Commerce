@@ -1,6 +1,5 @@
 import {StyleSheet, Platform} from 'react-native';
 import {Colors} from '../../App/Configs/Colors';
-import Styles from '../../App/Configs/Styles';
 
 export default StyleSheet.create({
   scrollView: {
@@ -70,6 +69,11 @@ export default StyleSheet.create({
   touWrap: {
     flexDirection: 'row',
     justifyContent: 'center',
+    paddingHorizontal: 16,
+    position: 'absolute',
+    bottom: 0,
+    width: '110%',
+    marginBottom: 12,
   },
   touText: {
     color: Colors.Gray9,

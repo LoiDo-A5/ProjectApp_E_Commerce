@@ -1,7 +1,8 @@
 import React, {useCallback, useEffect} from 'react';
-import {View, ActivityIndicator, StyleSheet} from 'react-native';
+import {View, ActivityIndicator, StyleSheet, Image} from 'react-native';
 import {CommonActions, useNavigation} from '@react-navigation/native';
 import {Colors} from '../App/Configs/Colors';
+import Images from '../App/Configs/Images';
 
 export const SplashScreen = () => {
   const navigation = useNavigation();
@@ -30,7 +31,10 @@ export const SplashScreen = () => {
 
   return (
     <View style={styles.container}>
-      <ActivityIndicator />
+      <View style={styles.loadingContainer}>
+        <ActivityIndicator style={styles.icon} size="large" />
+        <Image source={Images.logo} resizeMode="contain" style={styles.logo} />
+      </View>
     </View>
   );
 };
@@ -41,5 +45,17 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: Colors.Gray,
+  },
+  loadingContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  icon: {
+    position: 'absolute',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  logo: {
+    zIndex: -1,
   },
 });
