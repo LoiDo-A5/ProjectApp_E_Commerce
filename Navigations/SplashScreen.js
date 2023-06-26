@@ -23,7 +23,7 @@ export const SplashScreen = () => {
       if (true) {
         resetNavigation('Auth');
       } else {
-        resetNavigation('Auth');
+        resetNavigation('Main');
       }
     };
     checkAuth();
