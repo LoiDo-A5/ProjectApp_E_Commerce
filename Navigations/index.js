@@ -13,7 +13,7 @@ const Stack = createStackNavigator();
 let NavStack = memo(() => {
   return (
     <Stack.Navigator
-      initialRouteName={Routes.SignInScreen}
+      initialRouteName={Routes.Splash}
       screenOptions={{
         ...utils.screenOptions,
         headerShown: true,

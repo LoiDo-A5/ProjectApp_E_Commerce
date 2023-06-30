@@ -1,58 +1,62 @@
 import React from 'react';
-import {View, Text, StyleSheet, Image} from 'react-native';
-import {NavigationContainer} from '@react-navigation/native';
+import {View, Text} from 'react-native';
+import {createDrawerNavigator} from '@react-navigation/drawer';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {createStackNavigator} from '@react-navigation/stack';
 
+// Define your screen components
+const HomeScreen = () => (
+  <View>
+    <Text>Home Screen</Text>
+  </View>
+);
+
+const ProfileScreen = () => (
+  <View>
+    <Text>Profile Screen</Text>
+  </View>
+);
+
+const SettingsScreen = () => (
+  <View>
+    <Text>Settings Screen</Text>
+  </View>
+);
+
+// Create the bottom tab navigator
 const Tab = createBottomTabNavigator();
 
-const HomeScreen = () => {
-  return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Home Screen</Text>
-      <Text>Welcome to the Home Screen!</Text>
-    </View>
-  );
-};
+const TabNavigator = () => (
+  <Tab.Navigator>
+    <Tab.Screen name="Home" component={HomeScreen} />
+    <Tab.Screen name="Profile" component={ProfileScreen} />
+    <Tab.Screen name="Settings" component={SettingsScreen} />
+  </Tab.Navigator>
+);
 
-const ProfileScreen = () => {
-  return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Profile Screen</Text>
-      <Text>Welcome to the Profile Screen!</Text>
-    </View>
-  );
-};
+// Create the stack navigator
+const Stack = createStackNavigator();
 
-const SettingsScreen = () => {
-  return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Settings Screen</Text>
-      <Text>Welcome to the Settings Screen!</Text>
-    </View>
-  );
-};
-
-const MainDrawer = () => {
-  return (
+const StackNavigator = () => (
+  <>
     <Tab.Navigator>
       <Tab.Screen name="Home" component={HomeScreen} />
       <Tab.Screen name="Profile" component={ProfileScreen} />
       <Tab.Screen name="Settings" component={SettingsScreen} />
     </Tab.Navigator>
-  );
-};
+  </>
+);
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 16,
-  },
-});
+// Create the drawer navigator
+const Drawer = createDrawerNavigator();
+
+const MainDrawer = () => (
+  <Drawer.Navigator
+    backBehavior="none"
+    drawerType={'slide'}
+    drawerContent={props => <SettingsScreen {...props} />}>
+    <Drawer.Screen name="Stack" component={StackNavigator} />
+  </Drawer.Navigator>
+);
 
 export default MainDrawer;
