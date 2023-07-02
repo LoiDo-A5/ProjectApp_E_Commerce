@@ -3,6 +3,7 @@ import {View, Text} from 'react-native';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createStackNavigator} from '@react-navigation/stack';
+import DrawerContainer from '../Containers/Drawer';
 
 // Define your screen components
 const HomeScreen = () => (
@@ -54,7 +55,7 @@ const MainDrawer = () => (
   <Drawer.Navigator
     backBehavior="none"
     drawerType={'slide'}
-    drawerContent={props => <SettingsScreen {...props} />}>
+    drawerContent={props => <DrawerContainer {...props} />}>
     <Drawer.Screen name="Stack" component={StackNavigator} />
   </Drawer.Navigator>
 );
