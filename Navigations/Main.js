@@ -30,9 +30,27 @@ const StackNavigator = () => {
   return (
     <>
       <Tab.Navigator>
-        <Tab.Screen name="Home" component={HomeScreen} />
-        <Tab.Screen name="Profile" component={ProfileScreen} />
-        <Tab.Screen name="Settings" component={SettingsScreen} />
+        <Tab.Screen
+          options={{
+            headerTitleAlign: 'center', // Align the title to the center
+          }}
+          name="Home"
+          component={HomeScreen}
+        />
+        <Tab.Screen
+          options={{
+            headerTitleAlign: 'center', // Align the title to the center
+          }}
+          name="Profile"
+          component={ProfileScreen}
+        />
+        <Tab.Screen
+          options={{
+            headerTitleAlign: 'center', // Align the title to the center
+          }}
+          name="Settings"
+          component={SettingsScreen}
+        />
       </Tab.Navigator>
     </>
   );
@@ -47,7 +65,11 @@ const MainDrawer = () => (
     drawerType={'slide'}
     // eslint-disable-next-line react/no-unstable-nested-components
     drawerContent={props => <DrawerContainer {...props} />}>
-    <Drawer.Screen name="Stack" component={StackNavigator} />
+    <Drawer.Screen
+      options={{title: '', headerTransparent: true}}
+      name="Stack"
+      component={StackNavigator}
+    />
   </Drawer.Navigator>
 );
 
