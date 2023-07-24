@@ -5,7 +5,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import {StyleSheet} from 'react-native';
 
 import utils from './utils';
-import Login from '../Containers/Auth/Login';
+import Login from '../Containers/Auth/Login/Login';
 import {Colors} from '../App/Configs/Colors';
 import Device from '../App/Configs/Device';
 import Route from '../App/Utils/Route';

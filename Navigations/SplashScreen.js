@@ -20,7 +20,7 @@ export const SplashScreen = () => {
 
   useEffect(() => {
     const checkAuth = async () => {
-      if (false) {
+      if (true) {
         resetNavigation('Auth');
       } else {
         resetNavigation('Main');

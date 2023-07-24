@@ -1,16 +1,23 @@
 import {useNavigation} from '@react-navigation/native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, Button, SafeAreaView, Image, Keyboard} from 'react-native';
-import Routes from '../../App/Utils/Route';
+import Routes from '../../../App/Utils/Route';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import styles from './LoginStyles';
-import Images from '../../App/Configs/Images';
-import Text from '../../App/Components/Text';
-import TextInput from '../../App/Components/Form/TextInput';
-import TextInputPassword from '../../App/Components/Form/TextInputPassword';
+import Images from '../../../App/Configs/Images';
+import Text from '../../../App/Components/Text';
+import TextInput from '../../../App/Components/Form/TextInput';
+import TextInputPassword from '../../../App/Components/Form/TextInputPassword';
+import useLogin from './hook/useLogin';
+import {useSelector} from 'react-redux';
 
 const Login = () => {
+  const {isLogin} = useSelector(state => state.authReducer);
   const navigation = useNavigation();
+  const {isLoading, handleClickLogin} = useLogin();
+
+  console.log('22222222', isLogin);
+
   const [phone, setPhoneState] = useState('');
   const [phoneError, setPhoneErrorState] = useState();
   const [password, setPasswordState] = useState('');
@@ -32,9 +39,18 @@ const Login = () => {
       setPasswordlErrorState('');
     }
     if (!hasError) {
-      navigation.navigate(Routes.SignUp);
+      handleClickLogin({username: phone, password: password});
     }
   };
+
+  useEffect(() => {
+    if (isLogin) {
+      navigation.reset({
+        index: 0,
+        routes: [{name: 'Main'}],
+      });
+    }
+  }, [isLogin, navigation]);
 
   return (
     <SafeAreaView style={styles.wrap}>
