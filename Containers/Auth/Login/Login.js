@@ -10,11 +10,16 @@ import TextInput from '../../../App/Components/Form/TextInput';
 import TextInputPassword from '../../../App/Components/Form/TextInputPassword';
 import useLogin from './hook/useLogin';
 import {useSelector} from 'react-redux';
+import LocalStorage from '../../../App/class/LocalStorage';
+import {LOCAL_STORAGE_KEYS} from '../../../App/Configs/Constant';
 
 const Login = () => {
   const {isLogin} = useSelector(state => state.authReducer);
   const navigation = useNavigation();
   const {isLoading, handleClickLogin} = useLogin();
+  const local = LocalStorage.getItem(LOCAL_STORAGE_KEYS.AUTHENTICATION);
+
+  console.log('locallocal', local);
 
   console.log('22222222', isLogin);
 

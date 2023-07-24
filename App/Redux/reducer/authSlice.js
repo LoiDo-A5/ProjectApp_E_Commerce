@@ -2,9 +2,7 @@ import {createSlice} from '@reduxjs/toolkit';
 import {LOCAL_STORAGE_KEYS} from '../../Configs/Constant';
 import LocalStorage from '../../class/LocalStorage';
 
-const initialState = LocalStorage.getItem(
-  LOCAL_STORAGE_KEYS.AUTHENTICATION,
-) || {
+const initialState = {
   accessToken: '',
   refreshToken: '',
   isLogin: false,
@@ -16,49 +14,38 @@ const authSlice = createSlice({
   reducers: {
     updateAuthentication: (state, action) => {
       const {accessToken, refreshToken} = action.payload;
-      const newState = {
-        ...state,
+      state.accessToken = accessToken;
+      state.refreshToken = refreshToken;
+      state.isLogin = true;
+      LocalStorage.setItem(LOCAL_STORAGE_KEYS.AUTHENTICATION, {
         accessToken,
         refreshToken,
         isLogin: true,
-      };
-      LocalStorage.setItem(LOCAL_STORAGE_KEYS.AUTHENTICATION, newState);
-      return newState;
+      });
     },
     setAccessToken: (state, action) => {
       const accessToken = action.payload;
-      const newState = {
-        ...state,
-        accessToken,
-      };
+      state.accessToken = accessToken;
       LocalStorage.updateValueOfKey(
         LOCAL_STORAGE_KEYS.AUTHENTICATION,
         'accessToken',
         accessToken,
       );
-      return newState;
     },
     setRefreshToken: (state, action) => {
       const refreshToken = action.payload;
-      const newState = {
-        ...state,
-        refreshToken,
-      };
+      state.refreshToken = refreshToken;
       LocalStorage.updateValueOfKey(
         LOCAL_STORAGE_KEYS.AUTHENTICATION,
         'refreshToken',
         refreshToken,
       );
-      return newState;
     },
     handleLogout: state => {
       LocalStorage.clear();
-      return {
-        ...state,
-        accessToken: '',
-        refreshToken: '',
-        isLogin: false,
-      };
+      state.accessToken = '';
+      state.refreshToken = '';
+      state.isLogin = false;
     },
   },
 });

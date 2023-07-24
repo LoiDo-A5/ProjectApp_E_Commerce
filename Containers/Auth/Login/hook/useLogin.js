@@ -42,17 +42,17 @@ const useLogin = () => {
         dispatch(
           updateAuthentication({accessToken, refreshToken, isLogin: true}),
         );
-        dispatch(
-          updateUser({
-            id,
-            user_name,
-            password,
-            full_name,
-            email,
-            phone_number,
-            address,
-          }),
-        );
+        // dispatch(
+        //   updateUser({
+        //     id,
+        //     user_name,
+        //     password,
+        //     full_name,
+        //     email,
+        //     phone_number,
+        //     address,
+        //   }),
+        // );
       } else {
         ToastBottomHelper.error(message);
       }
