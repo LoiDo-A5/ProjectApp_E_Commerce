@@ -1,4 +1,4 @@
-import React, {useState, useRef, useImperativeHandle, forwardRef} from 'react';
+import React, {useState, useImperativeHandle, forwardRef} from 'react';
 import {View, StyleSheet, Modal} from 'react-native';
 
 import Text from '../Text';

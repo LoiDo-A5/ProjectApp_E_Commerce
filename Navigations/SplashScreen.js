@@ -3,9 +3,11 @@ import {View, ActivityIndicator, StyleSheet, Image} from 'react-native';
 import {CommonActions, useNavigation} from '@react-navigation/native';
 import {Colors} from '../App/Configs/Colors';
 import Images from '../App/Configs/Images';
+import {useSelector} from 'react-redux';
 
 export const SplashScreen = () => {
   const navigation = useNavigation();
+  const {isLogin} = useSelector(state => state.authReducer);
 
   const resetNavigation = useCallback(
     routeName => {
@@ -20,14 +22,14 @@ export const SplashScreen = () => {
 
   useEffect(() => {
     const checkAuth = async () => {
-      if (true) {
+      if (isLogin) {
         resetNavigation('Auth');
       } else {
         resetNavigation('Main');
       }
     };
     checkAuth();
-  }, [resetNavigation]);
+  }, [isLogin, resetNavigation]);
 
   return (
     <View style={styles.container}>

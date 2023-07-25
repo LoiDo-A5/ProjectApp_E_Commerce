@@ -16,6 +16,7 @@ import Routes from '../../App/Utils/Route';
 import AlertModal from '../../App/Components/Alert';
 import {useDispatch} from 'react-redux';
 import {handleLogout} from '../../App/Redux/reducer/authSlice';
+import {CommonActions} from '@react-navigation/native';
 
 const DrawerContainer = ({navigation}) => {
   const alertRef = useRef(null);
@@ -29,7 +30,11 @@ const DrawerContainer = ({navigation}) => {
 
   const doLogout = () => {
     dispatch(handleLogout());
-    navigation.replace('Auth');
+    const resetAction = CommonActions.reset({
+      index: 0,
+      routes: [{name: 'Auth'}],
+    });
+    navigation.dispatch(resetAction);
     alertRef.current.hideModal();
   };
 

@@ -48,7 +48,7 @@ const Login = () => {
   };
 
   useEffect(() => {
-    if (isLogin || getDataStorage()) {
+    if (isLogin || getDataStorage() === true) {
       navigation.reset({
         index: 0,
         routes: [{name: 'Main'}],
