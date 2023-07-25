@@ -17,11 +17,10 @@ const Login = () => {
   const {isLogin} = useSelector(state => state.authReducer);
   const navigation = useNavigation();
   const {isLoading, handleClickLogin} = useLogin();
-  const local = LocalStorage.getItem(LOCAL_STORAGE_KEYS.AUTHENTICATION);
-
-  console.log('locallocal', local);
-
-  console.log('22222222', isLogin);
+  async function getDataStorage() {
+    const data = await LocalStorage.getItem(LOCAL_STORAGE_KEYS.AUTHENTICATION);
+    return data.isLogin;
+  }
 
   const [phone, setPhoneState] = useState('');
   const [phoneError, setPhoneErrorState] = useState();
@@ -49,7 +48,7 @@ const Login = () => {
   };
 
   useEffect(() => {
-    if (isLogin) {
+    if (isLogin || getDataStorage()) {
       navigation.reset({
         index: 0,
         routes: [{name: 'Main'}],

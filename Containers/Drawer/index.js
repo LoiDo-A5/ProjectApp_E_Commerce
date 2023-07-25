@@ -9,16 +9,13 @@ import {
 } from 'react-native';
 import {IconOutline} from '@ant-design/icons-react-native';
 
-// import AlertNavigation from 'components/Common/Alert';
 import Text from '../../App/Components/Text';
+import AlertNavigation from '../../App/Components/Alert';
 import {Colors} from '../../App/Configs/Colors';
 import Images from '../../App/Configs/Images';
 import Routes from '../../App/Utils/Route';
 
 const DrawerContainer = ({navigation}) => {
-  const [, updateState] = useState();
-  const forceUpdate = useCallback(() => updateState({}), []);
-
   const user = {
     avatar:
       'https://vapa.vn/wp-content/uploads/2022/12/anh-3d-thien-nhien.jpeg',
@@ -28,19 +25,19 @@ const DrawerContainer = ({navigation}) => {
   const doLogout = () => {};
 
   const onLogout = () => {
-    // AlertNavigation.alert('account_logout_do_you_really_want_to_logout', '', [
-    //   {
-    //     label: 'logout',
-    //     onPress: doLogout,
-    //     style: {marginRight: 7},
-    //   },
-    //   {
-    //     primary: true,
-    //     label: 'cancel',
-    //     onPress: AlertNavigation.hideModal,
-    //     style: {marginLeft: 7},
-    //   },
-    // ]);
+    AlertNavigation.alert('account_logout_do_you_really_want_to_logout', '', [
+      {
+        label: 'logout',
+        onPress: doLogout,
+        style: {marginRight: 7},
+      },
+      {
+        primary: true,
+        label: 'cancel',
+        onPress: AlertNavigation.hideModal,
+        style: {marginLeft: 7},
+      },
+    ]);
   };
 
   const goToMyAccount = () => {
@@ -56,8 +53,11 @@ const DrawerContainer = ({navigation}) => {
   };
 
   useEffect(() => {
-    forceUpdate();
-  }, [forceUpdate]);
+    AlertNavigation.setRef(this);
+    return () => {
+      AlertNavigation.clearRef();
+    };
+  }, []);
 
   return (
     <SafeAreaView style={styles.wrap}>
@@ -93,6 +93,7 @@ const DrawerContainer = ({navigation}) => {
               image={'global'}
               name={'text_language'}
             />
+            <Row onPress={onLogout} image={'export'} name={'logout'} />
           </View>
         </View>
       </ScrollView>
