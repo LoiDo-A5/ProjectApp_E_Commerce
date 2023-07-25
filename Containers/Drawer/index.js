@@ -14,9 +14,12 @@ import {Colors} from '../../App/Configs/Colors';
 import Images from '../../App/Configs/Images';
 import Routes from '../../App/Utils/Route';
 import AlertModal from '../../App/Components/Alert';
+import {useDispatch} from 'react-redux';
+import {handleLogout} from '../../App/Redux/reducer/authSlice';
 
 const DrawerContainer = ({navigation}) => {
   const alertRef = useRef(null);
+  const dispatch = useDispatch();
 
   const user = {
     avatar:
@@ -24,7 +27,11 @@ const DrawerContainer = ({navigation}) => {
     name: 'loi',
   };
 
-  const doLogout = () => {};
+  const doLogout = () => {
+    dispatch(handleLogout());
+    navigation.replace('Auth');
+    alertRef.current.hideModal();
+  };
 
   const onLogout = () => {
     alertRef.current.alert('Account logout do you really want to logout', '', [
