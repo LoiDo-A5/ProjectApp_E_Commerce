@@ -1,44 +1,23 @@
-import React from 'react';
-import Modal from 'react-native-modal';
-import {View, StyleSheet} from 'react-native';
+import React, {useState, useRef, useImperativeHandle, forwardRef} from 'react';
+import {View, StyleSheet, Modal} from 'react-native';
 
 import Text from '../Text';
 import TextButton from '../TextButton';
 import {Colors} from '../../Configs/Colors';
 
-class Alert extends React.Component {
-  static _ref = null;
-
-  static setRef(ref = {}) {
-    this._ref = ref;
-  }
-
-  static getRef() {
-    return this._ref;
-  }
-
-  static clearRef() {
-    this._ref = null;
-  }
-
-  state = {
+const AlertModal = forwardRef((props, ref) => {
+  const [state, setState] = useState({
     title: '',
     description: '',
     buttons: [],
     show: false,
-    styleButtons: [] || {},
+    styleButtons: {},
     onBackdropPress: () => null,
-  };
+  });
 
-  static alert = (
-    title,
-    description,
-    buttons,
-    styleButtons,
-    onBackdropPress,
-  ) => {
-    if (this._ref) {
-      this._ref.setState({
+  useImperativeHandle(ref, () => ({
+    alert: (title, description, buttons, styleButtons, onBackdropPress) => {
+      setState({
         title,
         description,
         buttons,
@@ -46,11 +25,13 @@ class Alert extends React.Component {
         styleButtons,
         onBackdropPress,
       });
-    }
-  };
-
-  renderContent = () => {
-    const {description, title} = this.state;
+    },
+    hideModal: () => {
+      setState(prevState => ({...prevState, show: false}));
+    },
+  }));
+  const renderContent = () => {
+    const {description, title} = state;
     return (
       <>
         <Text style={styles.title}>{title}</Text>
@@ -65,20 +46,20 @@ class Alert extends React.Component {
     );
   };
 
-  renderButtons = () => {
+  const renderButtons = () => {
     const justifyContent =
-      this.state.buttons.length === 1 ? 'center' : 'space-between';
+      state.buttons.length === 1 ? 'center' : 'space-between';
     return (
       <View
-        key={this.state.title}
+        key={state.title}
         style={[
           styles.flexRow,
           {
             justifyContent: justifyContent,
           },
-          this.state.styleButtons,
+          state.styleButtons,
         ]}>
-        {this.state.buttons.map((item, index) => {
+        {state.buttons.map((item, index) => {
           return (
             <TextButton
               key={`item_${index}`}
@@ -93,40 +74,43 @@ class Alert extends React.Component {
     );
   };
 
-  static hideModal = () => {
-    this._ref.setState({show: false});
-  };
-
-  static showModal = () => {
-    this._ref.setState({show: true});
-  };
-
-  render() {
-    const {buttons, show, onBackdropPress} = this.state;
-    return (
-      <Modal
-        animationIn={'zoomIn'}
-        animationOut={'zoomOut'}
-        isVisible={show}
-        onBackdropPress={onBackdropPress}
-        useNativeDriver={true}
-        hideModalContentWhileAnimating>
-        <View style={[styles.wrap, styles.contentPadding]}>
-          {this.renderContent()}
+  const {buttons, show, onBackdropPress} = state;
+  return (
+    <Modal
+      animationType="fade"
+      transparent={true}
+      visible={show}
+      onRequestClose={() => {
+        onBackdropPress();
+      }}>
+      <View style={styles.modalContainer}>
+        <View style={styles.modalContent}>
+          <View style={[styles.wrap, styles.contentPadding]}>
+            {renderContent()}
+          </View>
+          <View style={[styles.wrap, styles.buttonsPadding]}>
+            {!!buttons?.length && renderButtons()}
+          </View>
         </View>
-        <View style={[styles.wrap, styles.buttonsPadding]}>
-          {!!buttons?.length && this.renderButtons()}
-        </View>
-      </Modal>
-    );
-  }
-}
+      </View>
+    </Modal>
+  );
+});
 
 const styles = StyleSheet.create({
-  wrap: {
-    padding: 20,
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  modalContent: {
     backgroundColor: Colors.White,
+    borderRadius: 8,
+    padding: 20,
+  },
+  wrap: {
+    alignItems: 'center',
   },
   title: {
     fontWeight: 'bold',
@@ -134,7 +118,7 @@ const styles = StyleSheet.create({
     color: Colors.Primary,
   },
   descriptionWrap: {
-    minHeight: 78,
+    minHeight: 10,
     paddingVertical: 10,
   },
   description: {
@@ -152,4 +136,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Alert;
+export default AlertModal;

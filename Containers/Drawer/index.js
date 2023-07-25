@@ -1,4 +1,4 @@
-import React, {useEffect, useCallback, useState} from 'react';
+import React, {useEffect, useCallback, useState, useRef} from 'react';
 import {
   View,
   Image,
@@ -10,12 +10,14 @@ import {
 import {IconOutline} from '@ant-design/icons-react-native';
 
 import Text from '../../App/Components/Text';
-import AlertNavigation from '../../App/Components/Alert';
 import {Colors} from '../../App/Configs/Colors';
 import Images from '../../App/Configs/Images';
 import Routes from '../../App/Utils/Route';
+import AlertModal from '../../App/Components/Alert';
 
 const DrawerContainer = ({navigation}) => {
+  const alertRef = useRef(null);
+
   const user = {
     avatar:
       'https://vapa.vn/wp-content/uploads/2022/12/anh-3d-thien-nhien.jpeg',
@@ -25,7 +27,7 @@ const DrawerContainer = ({navigation}) => {
   const doLogout = () => {};
 
   const onLogout = () => {
-    AlertNavigation.alert('account_logout_do_you_really_want_to_logout', '', [
+    alertRef.current.alert('Account logout do you really want to logout', '', [
       {
         label: 'logout',
         onPress: doLogout,
@@ -34,7 +36,7 @@ const DrawerContainer = ({navigation}) => {
       {
         primary: true,
         label: 'cancel',
-        onPress: AlertNavigation.hideModal,
+        onPress: () => alertRef.current.hideModal(),
         style: {marginLeft: 7},
       },
     ]);
@@ -51,13 +53,6 @@ const DrawerContainer = ({navigation}) => {
   const goToContact = () => {
     navigation.navigate(Routes.ContactUs);
   };
-
-  useEffect(() => {
-    AlertNavigation.setRef(this);
-    return () => {
-      AlertNavigation.clearRef();
-    };
-  }, []);
 
   return (
     <SafeAreaView style={styles.wrap}>
@@ -96,6 +91,7 @@ const DrawerContainer = ({navigation}) => {
             <Row onPress={onLogout} image={'export'} name={'logout'} />
           </View>
         </View>
+        <AlertModal ref={alertRef} />
       </ScrollView>
     </SafeAreaView>
   );
