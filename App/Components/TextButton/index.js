@@ -7,7 +7,7 @@ import {
 } from 'react-native';
 
 import Text from '../Text';
-import {Colors, colorOpacity} from '../../Configs/Colors';
+import {Colors} from '../../Configs/Colors';
 
 const TextButton = ({
   testID,

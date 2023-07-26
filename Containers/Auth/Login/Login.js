@@ -10,19 +10,12 @@ import TextInput from '../../../App/Components/Form/TextInput';
 import TextInputPassword from '../../../App/Components/Form/TextInputPassword';
 import useLogin from './hook/useLogin';
 import {useSelector} from 'react-redux';
-import LocalStorage from '../../../App/class/LocalStorage';
-import {LOCAL_STORAGE_KEYS} from '../../../App/Configs/Constant';
+import LoadingScreen from '../../../App/Components/LoadingView';
 
 const Login = () => {
-  const {isLogin} = useSelector(state => state.auth); // Use 'auth' instead of 'authSlice'
+  const {isLogin} = useSelector(state => state.auth);
   const navigation = useNavigation();
   const {isLoading, handleClickLogin} = useLogin();
-  async function getDataStorage() {
-    const data = await LocalStorage.getItem(LOCAL_STORAGE_KEYS.AUTHENTICATION);
-    return data.isLogin;
-  }
-
-  console.log('isLoginisLoginisLogin',isLogin)
 
   const [phone, setPhoneState] = useState('');
   const [phoneError, setPhoneErrorState] = useState();
@@ -50,7 +43,7 @@ const Login = () => {
   };
 
   useEffect(() => {
-    if (isLogin || getDataStorage() === true) {
+    if (isLogin) {
       navigation.reset({
         index: 0,
         routes: [{name: 'Main'}],
@@ -60,54 +53,58 @@ const Login = () => {
 
   return (
     <SafeAreaView style={styles.wrap}>
-      <KeyboardAwareScrollView
-        contentContainerStyle={[styles.scrollView, styles.hwrap]}
-        keyboardShouldPersistTaps={'handled'}>
-        <View style={styles.wrapLogo}>
-          <Image
-            source={Images.logo}
-            style={styles.logo}
-            resizeMode="contain"
-          />
-        </View>
-        <View style={[styles.center]}>
-          <Text bold style={styles.loginText}>
-            {'LOGIN'}
-          </Text>
-          <TextInput
-            placeholder={'Phone Number'}
-            onChange={setPhoneState}
-            errorText={phoneError}
-            value={phone}
-            keyboardType={'numeric'}
-            textInputStyle={styles.paddingVertical}
-          />
-          <TextInputPassword
-            secureTextEntry
-            placeholder={'Password'}
-            onChange={setPasswordState}
-            value={password}
-            errorText={passwordError}
-            textInputStyle={styles.paddingVertical}
-            returnKeyType={'done'}
-            onSubmitEditing={validate}
-          />
-
-          <View style={[styles.buttonWrap]}>
-            <Button type="auth" title={'Login'} onPress={validate} />
+      {isLoading ? (
+        <LoadingScreen />
+      ) : (
+        <KeyboardAwareScrollView
+          contentContainerStyle={[styles.scrollView, styles.hwrap]}
+          keyboardShouldPersistTaps={'handled'}>
+          <View style={styles.wrapLogo}>
+            <Image
+              source={Images.logo}
+              style={styles.logo}
+              resizeMode="contain"
+            />
           </View>
-        </View>
+          <View style={[styles.center]}>
+            <Text bold style={styles.loginText}>
+              {'LOGIN'}
+            </Text>
+            <TextInput
+              placeholder={'Phone Number'}
+              onChange={setPhoneState}
+              errorText={phoneError}
+              value={phone}
+              keyboardType={'numeric'}
+              textInputStyle={styles.paddingVertical}
+            />
+            <TextInputPassword
+              secureTextEntry
+              placeholder={'Password'}
+              onChange={setPasswordState}
+              value={password}
+              errorText={passwordError}
+              textInputStyle={styles.paddingVertical}
+              returnKeyType={'done'}
+              onSubmitEditing={validate}
+            />
 
-        <View style={styles.touWrap}>
-          <Text style={[styles.touText]}>{'Dont have an account ?.'}</Text>
-          <Text
-            bold
-            style={styles.signUpText}
-            onPress={() => navigation.navigate(Routes.SignUp)}>
-            {' ' + 'Sign up'}
-          </Text>
-        </View>
-      </KeyboardAwareScrollView>
+            <View style={[styles.buttonWrap]}>
+              <Button type="auth" title={'Login'} onPress={validate} />
+            </View>
+          </View>
+
+          <View style={styles.touWrap}>
+            <Text style={[styles.touText]}>{'Dont have an account ?.'}</Text>
+            <Text
+              bold
+              style={styles.signUpText}
+              onPress={() => navigation.navigate(Routes.SignUp)}>
+              {' ' + 'Sign up'}
+            </Text>
+          </View>
+        </KeyboardAwareScrollView>
+      )}
     </SafeAreaView>
   );
 };

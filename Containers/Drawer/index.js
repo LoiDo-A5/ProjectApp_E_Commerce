@@ -1,4 +1,4 @@
-import React, {useEffect, useCallback, useState, useRef} from 'react';
+import React, {useRef} from 'react';
 import {
   View,
   Image,
@@ -14,22 +14,19 @@ import {Colors} from '../../App/Configs/Colors';
 import Images from '../../App/Configs/Images';
 import Routes from '../../App/Utils/Route';
 import AlertModal from '../../App/Components/Alert';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {handleLogout} from '../../App/Redux/reducer/authSlice';
 import {CommonActions} from '@react-navigation/native';
+import LocalStorage from '../../App/class/LocalStorage';
 
 const DrawerContainer = ({navigation}) => {
   const alertRef = useRef(null);
   const dispatch = useDispatch();
-
-  const user = {
-    avatar:
-      'https://vapa.vn/wp-content/uploads/2022/12/anh-3d-thien-nhien.jpeg',
-    name: 'loi',
-  };
+  const user = useSelector(state => state.user);
 
   const doLogout = () => {
     dispatch(handleLogout());
+    LocalStorage.clear();
     const resetAction = CommonActions.reset({
       index: 0,
       routes: [{name: 'Auth'}],
@@ -74,7 +71,7 @@ const DrawerContainer = ({navigation}) => {
 
           <View style={styles.avatarBackground}>
             {user.avatar ? (
-              <Image source={{uri: user.avatar}} style={styles.avatar} />
+              <Image source={{uri: user?.avatar_url}} style={styles.avatar} />
             ) : (
               <View style={styles.avatar}>
                 {/* <Icon name={'user'} size={27} /> */}
@@ -82,25 +79,19 @@ const DrawerContainer = ({navigation}) => {
             )}
             <View style={styles.textContainer}>
               <Text style={[styles.fullName]}>{user?.name}</Text>
-              <Text style={[styles.email]}>
-                {user ? user.phone_number : ''}
-              </Text>
+              <Text style={[styles.email]}>{user ? user.full_name : ''}</Text>
             </View>
           </View>
         </View>
         <View style={styles.containerRow}>
           <View>
-            <Row
-              onPress={goToMyAccount}
-              image={'user'}
-              name={'text_my_account'}
-            />
+            <Row onPress={goToMyAccount} image={'user'} name={'My account'} />
             <Row
               onPress={() => navigation.navigate(Routes.Language)}
               image={'global'}
-              name={'text_language'}
+              name={'Language'}
             />
-            <Row onPress={onLogout} image={'export'} name={'logout'} />
+            <Row onPress={onLogout} image={'export'} name={'Logout'} />
           </View>
         </View>
         <AlertModal ref={alertRef} />
@@ -117,8 +108,7 @@ export const Row = ({name, onPress, image, borderBottom, testID}) => {
     'policy',
     'text_contact',
   ];
-  const textColor =
-    nameActiveFeature.indexOf(name) < 0 ? 'rgba(0,0,0,0.2)' : 'black';
+  const textColor = nameActiveFeature.indexOf(name) && 'black';
   return (
     <TouchableOpacity
       onPress={onPress}
@@ -130,9 +120,7 @@ export const Row = ({name, onPress, image, borderBottom, testID}) => {
       <IconOutline
         name={image}
         size={24}
-        color={
-          nameActiveFeature.indexOf(name) < 0 ? 'rgba(0,0,0,0.2)' : 'black'
-        }
+        color={nameActiveFeature.indexOf(name) && 'black'}
       />
 
       <View style={styles.wrapText}>
@@ -195,7 +183,6 @@ const styles = StyleSheet.create({
     left: 30,
   },
 
-  // header
   avatarBackground: {
     flexDirection: 'row',
     flex: 1,

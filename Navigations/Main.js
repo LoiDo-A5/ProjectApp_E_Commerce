@@ -32,21 +32,21 @@ const StackNavigator = () => {
       <Tab.Navigator>
         <Tab.Screen
           options={{
-            headerTitleAlign: 'center', // Align the title to the center
+            headerTitleAlign: 'center',
           }}
           name="Home"
           component={HomeScreen}
         />
         <Tab.Screen
           options={{
-            headerTitleAlign: 'center', // Align the title to the center
+            headerTitleAlign: 'center',
           }}
           name="Profile"
           component={ProfileScreen}
         />
         <Tab.Screen
           options={{
-            headerTitleAlign: 'center', // Align the title to the center
+            headerTitleAlign: 'center',
           }}
           name="Settings"
           component={SettingsScreen}

@@ -7,7 +7,7 @@ import {useSelector} from 'react-redux';
 
 export const SplashScreen = () => {
   const navigation = useNavigation();
-  const { isLogin } = useSelector(state => state.auth);
+  const {isLogin} = useSelector(state => state.auth);
 
   const resetNavigation = useCallback(
     routeName => {
@@ -23,9 +23,9 @@ export const SplashScreen = () => {
   useEffect(() => {
     const checkAuth = async () => {
       if (isLogin) {
-        resetNavigation('Auth');
-      } else {
         resetNavigation('Main');
+      } else {
+        resetNavigation('Auth');
       }
     };
     checkAuth();
