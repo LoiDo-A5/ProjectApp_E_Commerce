@@ -14,13 +14,15 @@ import LocalStorage from '../../../App/class/LocalStorage';
 import {LOCAL_STORAGE_KEYS} from '../../../App/Configs/Constant';
 
 const Login = () => {
-  const {isLogin} = useSelector(state => state.authReducer);
+  const {isLogin} = useSelector(state => state.auth); // Use 'auth' instead of 'authSlice'
   const navigation = useNavigation();
   const {isLoading, handleClickLogin} = useLogin();
   async function getDataStorage() {
     const data = await LocalStorage.getItem(LOCAL_STORAGE_KEYS.AUTHENTICATION);
     return data.isLogin;
   }
+
+  console.log('isLoginisLoginisLogin',isLogin)
 
   const [phone, setPhoneState] = useState('');
   const [phoneError, setPhoneErrorState] = useState();

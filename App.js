@@ -1,13 +1,16 @@
 import React from 'react';
 import {Provider} from 'react-redux';
-import store from './App/Redux/store';
 import AppWithNavigationState from './Navigations';
 import Toast from 'react-native-toast-message';
+import {persistor, store} from './App/Redux/store';
+import {PersistGate} from 'redux-persist/integration/react';
 
 const App = () => {
   return (
     <Provider store={store}>
-      <AppWithNavigationState />
+      <PersistGate loading={null} persistor={persistor}>
+        <AppWithNavigationState />
+      </PersistGate>
       <Toast />
     </Provider>
   );
