@@ -8,7 +8,7 @@ const App = () => {
   return (
     <Provider store={store}>
       <AppWithNavigationState />
-      <Toast ref={ref => Toast.setRef(ref)} />
+      <Toast />
     </Provider>
   );
 };
