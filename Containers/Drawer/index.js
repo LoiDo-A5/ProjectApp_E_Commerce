@@ -7,8 +7,7 @@ import {
   SafeAreaView,
   StyleSheet,
 } from 'react-native';
-import {IconOutline} from '@ant-design/icons-react-native';
-
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import Text from '../../App/Components/Text';
 import {Colors} from '../../App/Configs/Colors';
 import Images from '../../App/Configs/Images';
@@ -70,11 +69,11 @@ const DrawerContainer = ({navigation}) => {
           <Image source={Images.logo} style={styles.logo} />
 
           <View style={styles.avatarBackground}>
-            {user.avatar ? (
+            {user?.avatar_url ? (
               <Image source={{uri: user?.avatar_url}} style={styles.avatar} />
             ) : (
-              <View style={styles.avatar}>
-                {/* <Icon name={'user'} size={27} /> */}
+              <View>
+                <Icon name="account-circle" size={52} />
               </View>
             )}
             <View style={styles.textContainer}>
@@ -85,13 +84,17 @@ const DrawerContainer = ({navigation}) => {
         </View>
         <View style={styles.containerRow}>
           <View>
-            <Row onPress={goToMyAccount} image={'user'} name={'My account'} />
+            <Row
+              onPress={goToMyAccount}
+              image={'perm-identity'}
+              name={'My account'}
+            />
             <Row
               onPress={() => navigation.navigate(Routes.Language)}
-              image={'global'}
+              image={'language'}
               name={'Language'}
             />
-            <Row onPress={onLogout} image={'export'} name={'Logout'} />
+            <Row onPress={onLogout} image={'logout'} name={'Logout'} />
           </View>
         </View>
         <AlertModal ref={alertRef} />
@@ -117,7 +120,7 @@ export const Row = ({name, onPress, image, borderBottom, testID}) => {
         styles.optionWrap,
         borderBottom && styles.borderBottom,
       ]}>
-      <IconOutline
+      <Icon
         name={image}
         size={24}
         color={nameActiveFeature.indexOf(name) && 'black'}
