@@ -4,13 +4,7 @@ import {createDrawerNavigator} from '@react-navigation/drawer';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import DrawerContainer from '../Containers/Drawer';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-
-// Define your screen components
-const HomeScreen = () => (
-  <View>
-    <Text>Home Screen</Text>
-  </View>
-);
+import Dashboard from '../Containers/Dashboard';
 
 const ProfileScreen = () => (
   <View>
@@ -48,7 +42,7 @@ const StackNavigator = () => {
           },
           headerTitleAlign: 'center',
         })}>
-        <Tab.Screen name="Home" component={HomeScreen} />
+        <Tab.Screen name="Home" component={Dashboard} />
         <Tab.Screen name="Profile" component={ProfileScreen} />
         <Tab.Screen name="Settings" component={SettingsScreen} />
       </Tab.Navigator>
