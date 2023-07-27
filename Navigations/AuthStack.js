@@ -1,6 +1,6 @@
 /* eslint-disable react/no-unstable-nested-components */
 import React from 'react';
-import {IconOutline} from '@ant-design/icons-react-native';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import {createStackNavigator} from '@react-navigation/stack';
 import {StyleSheet} from 'react-native';
 
@@ -22,8 +22,8 @@ export const AuthStack = () => {
         headerShown: true,
         headerTitleAlign: 'center',
         headerBackImage: () => (
-          <IconOutline
-            name="left"
+          <Icon
+            name="west"
             size={27}
             color={Colors.Black}
             style={styles.icLeft}
@@ -48,7 +48,7 @@ export const AuthStack = () => {
         options={{
           headerTitle: '',
           headerBackImage: () => (
-            <IconOutline name="left" size={27} color={Colors.Black} />
+            <Icon name="west" size={27} color={Colors.Black} />
           ),
           headerStyle: {
             elevation: 0,
