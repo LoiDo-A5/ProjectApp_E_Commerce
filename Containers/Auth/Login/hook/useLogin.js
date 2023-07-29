@@ -39,6 +39,7 @@ const useLogin = () => {
           refreshToken,
           accessToken,
         } = result;
+
         dispatch(
           updateAuthentication({accessToken, refreshToken, isLogin: true}),
         );

@@ -1,10 +1,12 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {View, Text} from 'react-native';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import DrawerContainer from '../Containers/Drawer';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Dashboard from '../Containers/Dashboard';
+import {useSelector} from 'react-redux';
+import {useNavigation} from '@react-navigation/native';
 
 const ProfileScreen = () => (
   <View>
@@ -22,6 +24,18 @@ const SettingsScreen = () => (
 const Tab = createBottomTabNavigator();
 
 const StackNavigator = () => {
+  const {isLogin} = useSelector(state => state.auth);
+  const navigation = useNavigation();
+
+  useEffect(() => {
+    if (!isLogin) {
+      navigation.reset({
+        index: 0,
+        routes: [{name: 'Auth'}],
+      });
+    }
+  }, [isLogin, navigation]);
+
   return (
     <>
       <Tab.Navigator

@@ -27,10 +27,9 @@ export const axiosPrivate = axios.create({
   headers: {'Content-Type': 'application/json'},
 });
 
-export const stateStore = store.getState();
-
 axiosPrivate.interceptors.request.use(
   config => {
+    const stateStore = store.getState();
     const accessToken = stateStore.auth.accessToken;
 
     if (!config.headers.Authorization && accessToken) {
@@ -44,6 +43,7 @@ axiosPrivate.interceptors.request.use(
 axiosPrivate.interceptors.response.use(
   response => response.data,
   async error => {
+    const stateStore = store.getState();
     const refreshToken = stateStore.auth.refreshToken;
 
     if (error && error.response) {
